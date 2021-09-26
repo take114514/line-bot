@@ -65,5 +65,46 @@ class LinebotController < ApplicationController
                          "雨だけどあなたの明るさでみんなを晴れやかにしてあげて!"].sample
                       push =
                         "今日の天気？\n今日は雨が降りそうだから傘があった方が安心だよ。\n　  6〜12時　#{per06to12}％\n　12〜18時　 #{per12to18}％\n　18〜24時　#{per18to24}％\n#{word}"
+                else
+                        word =
+                ["天気もいいから一駅歩いてみるのはどう？",
+                 "今日会う人のいいところを見つけて是非その人に教えてあげて!",
+                 "素晴らしい一日になりますように",
+                 "雨が降っちゃったらごめんね。私のことは嫌いになっても雨のことは嫌いにならないで下さい。"].sample
+              push =
+                "今日の天気？\n今日は雨は降らなさそうだよ。\n#{word}"
+            end
+          end
+          # テキスト以外（画像等）のメッセージが送られた場合
+        else
+          push = "テキスト以外はわからないよ〜！文字で会話しましょう"
+        end
+        message = {
+          type: 'text',
+          text: push
+        }
+        client.reply_message(event['replyToken'], message)
+        # LINEお友達追された場合（機能②）
+      when Line::Bot::Event::Follow
+        # 登録したユーザーのidをユーザーテーブルに格納
+        line_id = event['source']['userId']
+        User.create(line_id: line_id)
+        # LINEお友達解除された場合（機能③）
+      when Line::Bot::Event::Unfollow
+        # お友達解除したユーザーのデータをユーザーテーブルから削除
+        line_id = event['source']['userId']
+        User.find_by(line_id: line_id).destroy
+      end
+    }
+    head :ok
+  end
 
-            }
+  private
+
+  def client
+    @client ||= Line::Bot::Client.new { |config|
+      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+    }
+  end
+end
