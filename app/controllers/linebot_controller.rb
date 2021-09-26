@@ -3,7 +3,7 @@ class LinebotController < ApplicationController
     require 'open-uri'
     require 'kconv'
     require 'rexml/document'
-
+#def callbackアクションはcase文の入れ子となっている
     def callback
         body = request.body.read
         signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -15,6 +15,9 @@ class LinebotController < ApplicationController
              case event
              # メッセージが送信された場合の対応(機能①)
              when Line::Bot::Event::Message
+              case event.type
+             # ユーザーからテキスト形式のメッセージが送られてきた場合
+            when Line::Bot::Event::MessageType::Text
              # event.message['text']:ユーザーから送られたメッセージ
              input = event.message['text']
              url = "https://www.drk7.jp/weather/xml/13.xml"
