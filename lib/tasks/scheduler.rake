@@ -35,13 +35,13 @@ task :update_ feed => :environment do
              "今日もよく眠れた？",
              "二日酔い大丈夫？",
              "早起きしてえらいね！",
-             "いつもより起きるのちょっとアイアンマンじゃない？"].sample
+             "いつもより起きるのちょっとゆっくりじゃない？"].sample
              word2 = 
-             ["気をつけて行ってきてね！アイアンマン！",
-             "良い一日を過ごしてね！アイアンマン！",
-             "今日も頑張ってね！アイアンマン！",
-             "今日も一日楽しんでいこうね！アイアンマン！",
-             "楽しいことがありますように。アイアンマン！"].sample
+             ["気をつけて行ってきてね！",
+             "良い一日を過ごしてね！",
+             "今日も頑張ってね！",
+             "今日も一日楽しんでいこうね！",
+             "楽しいことがありますように。"].sample
              # 降水確率によってメッセージを変更する閾値の設定
              mid_per = 50
              if per06to12.to_i >= mid_per || per12to18.to_i >= mid_per || per18to24.to_i >= mid_per
@@ -59,7 +59,7 @@ task :update_ feed => :environment do
                 text: push
             }
             # .multicast=Send messages to multiple users using userIds.(userIdsを使用している複数のユーザーにメッセージを送る)
-            response = client.multicast(user_ids,message)
+            response = client.multicast(user_ids, message)
             end
             "OK"
             end
