@@ -30,6 +30,8 @@ class LinebotController < ApplicationController
             # 「明日」or「あした」というワードが含まれる場合
           when /.*(明日|あした).*/
             # info[2]：明日の天気
+            puts ' ______________________________________________________'
+            puts doc.elements[xpath + 'info[2]/rainfallchance/period[2]']
             per06to12 = doc.elements[xpath + 'info[2]/rainfallchance/period[2]'].text
             per12to18 = doc.elements[xpath + 'info[2]/rainfallchance/period[3]'].text
             per18to24 = doc.elements[xpath + 'info[2]/rainfallchance/period[4]'].text
