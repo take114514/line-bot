@@ -96,7 +96,7 @@ class LinebotController < ApplicationController
         User.create(line_id: line_id)
         # LINEお友達解除された場合（機能③）
       when Line::Bot::Event::Unfollow
-        # お友達解除したユーザーのデータをユーザーテーブルから削除
+        # お友達解除したユーザーのデータをユーザーテーブルから削除 
         line_id = event['source']['userId']
         User.find_by(line_id: line_id).destroy
       end
