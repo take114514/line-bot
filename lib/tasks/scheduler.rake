@@ -5,6 +5,7 @@ task :update_feed => :environment do
   require 'kconv'
   require 'rexml/document'
 
+  # herokuにアップロード後、それぞれのキーを登録
   client ||= Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
@@ -13,6 +14,7 @@ task :update_feed => :environment do
   # 使用したxmlデータ（毎日朝6時更新）：以下URLを入力すれば見ることができます。
   url  = "https://www.drk7.jp/weather/xml/13.xml"
   # xmlデータをパース（利用しやすいように整形）
+  # 天気情報の取得
   xml  = open( url ).read.toutf8
   doc = REXML::Document.new(xml)
   # パスの共通部分を変数化（area[4]は「東京地方」を指定している）
@@ -31,11 +33,11 @@ task :update_feed => :environment do
        "早起きしてえらいね！",
        "いつもより起きるのちょっと遅いんじゃない？"].sample
     word2 =
-      ["気をつけて行ってきてね(^^)",
-       "良い一日を過ごしてね(^^)",
-       "雨に負けずに今日も頑張ってね(^^)",
-       "今日も一日楽しんでいこうね(^^)",
-       "楽しいことがありますように(^^)"].sample
+      ["気をつけて行ってきてね",
+       "良い一日を過ごしてね",
+       "雨に負けずに今日も頑張ってね",
+       "今日も一日楽しんでいこうね",
+       "楽しいことがありますように"].sample
     # 降水確率によってメッセージを変更する閾値の設定
     mid_per = 50
     if per06to12.to_i >= mid_per || per12to18.to_i >= mid_per || per18to24.to_i >= mid_per
