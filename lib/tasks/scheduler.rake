@@ -54,6 +54,7 @@ task :update_feed => :environment do
       type: 'text',
       text: push
     }
+    # multicastはuserIdsを使用して複数のユーザーにメッセージを送信するメソッドです
     response = client.multicast(user_ids, message)
   end
   "OK"
