@@ -4,6 +4,7 @@ class LinebotController < ApplicationController
   require 'kconv'
   require 'rexml/document'
 
+  # callbackメソッドの定義
   def callback
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -96,7 +97,7 @@ class LinebotController < ApplicationController
         User.create(line_id: line_id)
         # LINEお友達解除された場合（機能③）
       when Line::Bot::Event::Unfollow
-        # お友達解除したユーザーのデータをユーザーテーブルから削除
+        # お友達解除したユーザーのデータをユーザーテーブルから削除 
         line_id = event['source']['userId']
         User.find_by(line_id: line_id).destroy
       end
@@ -106,6 +107,7 @@ class LinebotController < ApplicationController
 
   private
 
+  # clientメソッドの定義
   def client
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
