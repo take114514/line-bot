@@ -5,13 +5,13 @@ task :update_feed => :environment do
   require 'kconv'
   require 'rexml/document'
 
-  # herokuにアップロード後、それぞれのキーを登録
+  # herokuにアップロード後、ENVキーとしてそれぞれのキーを登録(ENV→環境変数)
   client ||= Line::Bot::Client.new { |config|
     config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
   }
 
-  # 使用したxmlデータ（毎日朝6時更新）：以下URLを入力すれば見ることができます。
+  # 使用したxmlデータ（毎日朝6時更新）：天気情報が入っているXMLファイル
   url  = "https://www.drk7.jp/weather/xml/13.xml"
   # xmlデータをパース（利用しやすいように整形）
   # 天気情報の取得
