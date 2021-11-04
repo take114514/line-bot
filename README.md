@@ -1,4 +1,4 @@
-# 雨の日に天気を教えてくれるLINEbot
+# 雨が降るかを教えてくれるLINEbot
 
 ![image](https://user-images.githubusercontent.com/90116145/139619419-aa91e93e-5918-42b8-a60f-41e8eb25b7ad.png)
 
